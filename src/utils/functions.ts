@@ -1,8 +1,8 @@
 import sharp from "sharp";
 
 export const compressToUnder1MB = async (
-  data: Uint8Array<ArrayBuffer>
-): Promise<Uint8Array<ArrayBuffer>> => {
+  data: Uint8Array
+): Promise<Uint8Array> => {
   const maxSize = 1024 * 1024;
   let quality = 90;
 
@@ -13,5 +13,5 @@ export const compressToUnder1MB = async (
     compressed = await sharp(data).jpeg({ quality }).toBuffer();
   }
 
-  return new Uint8Array(compressed.buffer as ArrayBuffer);
+  return new Uint8Array(compressed);
 };
