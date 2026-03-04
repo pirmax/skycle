@@ -22,7 +22,9 @@ export const destroyTheSession = async (): Promise<void> => {
   session.destroy();
 };
 
-export const getVersionsByHandle = async (handle: string): Promise<Version[]> => {
+export const getVersionsByHandle = async (
+  handle: string,
+): Promise<Version[]> => {
   return prisma.version.findMany({
     where: {
       ownerHandle: handle as string,
@@ -35,7 +37,9 @@ export const getVersionsByHandle = async (handle: string): Promise<Version[]> =>
   });
 };
 
-export const searchBackground = async (query: string): Promise<UnsplashResult[]> => {
+export const searchBackground = async (
+  query: string,
+): Promise<UnsplashResult[]> => {
   const key = `search-background-${query.toLowerCase()}`;
   const redisCache = await Cache.getCache(key);
 
@@ -68,7 +72,10 @@ export const uploadOnBluesky = async (formData: FormData): Promise<string> => {
   }
 
   const blueskyClient = await createBlueskyClient(prisma);
-  const oauthSession: OAuthSession = await blueskyClient.restore(session.user.did, true);
+  const oauthSession: OAuthSession = await blueskyClient.restore(
+    session.user.did,
+    true,
+  );
   const agent = new Agent(oauthSession);
 
   const file: File | null = formData.get("image") as File;

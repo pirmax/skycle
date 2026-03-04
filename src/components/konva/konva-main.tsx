@@ -278,13 +278,17 @@ export default function KonvaVersion({ index = 0, owner, circles }: KonvaProps) 
   return (
     <KonvaStage
       name="stage"
-      ref={(element: Stage | null) => mainProvider.addToStageRefs(element, index)}
+      ref={(element: Stage | null) => {
+        mainProvider.addToStageRefs(element, index);
+      }}
       width={size.width}
       height={size.height}
     >
       <KonvaLayer
         name="layer"
-        ref={(element: Layer | null) => mainProvider.addToLayerRefs(element, index)}
+        ref={(element: Layer | null) => {
+          mainProvider.addToLayerRefs(element, index);
+        }}
         draggable
         onWheel={handleWheel}
         onTouchMove={handleTouchMove}

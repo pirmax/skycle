@@ -4,15 +4,24 @@ import { Shell } from "@/components/shell";
 import type { Version } from "@/generated/prisma/client";
 import getSession, { type User } from "@/lib/iron";
 
-export default async function Layout({
-  params: { handle },
-  children,
-}: {
-  params: {
-    handle: string;
-  };
-  children: JSX.Element;
-}): Promise<JSX.Element> {
+export default async function Layout(
+  props: {
+    params: Promise<{
+      handle: string;
+    }>;
+    children: JSX.Element;
+  }
+): Promise<JSX.Element> {
+  const params = await props.params;
+
+  const {
+    handle
+  } = params;
+
+  const {
+    children
+  } = props;
+
   const session: {
     user: User | null;
   } = await getSession();

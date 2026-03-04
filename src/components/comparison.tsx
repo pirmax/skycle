@@ -1,10 +1,11 @@
-"use client";
-
+"use client";;
 import Image from "next/image";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import type { ProfileDefinition, VersionDefinition } from "@/types";
+
+import type { JSX } from "react";
 
 type ComparisonProps = {
   selectedVersion: VersionDefinition;

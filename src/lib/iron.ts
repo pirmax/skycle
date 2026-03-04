@@ -16,7 +16,7 @@ const getSession = async (): Promise<
 > => {
   return await getIronSession<{
     user: User | null;
-  }>(cookies(), {
+  }>(await cookies(), {
     cookieName: "sid",
     password: process.env.COOKIE_PASSWORD as string,
   });

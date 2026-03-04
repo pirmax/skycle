@@ -76,7 +76,9 @@ export default function KonvaVersion({ index = 0, owner, circles }: KonvaProps) 
   return (
     <div ref={divRef} className="aspect-square">
       <KonvaStage
-        ref={(element: Stage | null) => mainProvider.addToStageRefs(element, index)}
+        ref={(element: Stage | null) => {
+          mainProvider.addToStageRefs(element, index);
+        }}
         width={size.width}
         height={size.height}
         scale={{
@@ -85,7 +87,9 @@ export default function KonvaVersion({ index = 0, owner, circles }: KonvaProps) 
         }}
       >
         <KonvaLayer
-          ref={(element: Layer | null) => mainProvider.addToLayerRefs(element, index)}
+          ref={(element: Layer | null) => {
+            mainProvider.addToLayerRefs(element, index);
+          }}
           scaleX={scale}
           scaleY={scale}
           x={position.x}

@@ -5,18 +5,27 @@ import GeneratorPage from "@/components/pages/generator-page";
 import type { ProfileDefinition } from "@/types";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     handle: string;
-  };
-  searchParams: {
+  }>;
+  searchParams: Promise<{
     period?: string | null;
-  };
+  }>;
 };
 
-export default async function Page({
-  params: { handle },
-  searchParams: { period = null },
-}: PageProps): Promise<JSX.Element> {
+export default async function Page(props: PageProps): Promise<JSX.Element> {
+  const searchParams = await props.searchParams;
+
+  const {
+    period = null
+  } = searchParams;
+
+  const params = await props.params;
+
+  const {
+    handle
+  } = params;
+
   try {
     const data: {
       own: ProfileDefinition;
