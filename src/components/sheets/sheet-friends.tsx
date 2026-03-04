@@ -30,7 +30,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import type { ProfileDefinition } from "@/types";
-import { PROXY_URL, SCORES } from "@/utils/constants";
+import { SCORES } from "@/utils/constants";
 import { friendsAtom, hideFriendAtom, unHideFriendsAtom } from "@/utils/maker-atom";
 import { ordinalNumbers } from "@/utils/ordinal-numbers";
 
@@ -85,7 +85,7 @@ export default function SheetFriends() {
                       <div className="flex items-center space-x-2 truncate">
                         <Avatar className="size-12">
                           <AvatarImage
-                            src={`${PROXY_URL}?url=${friend.avatar}`}
+                            src={`/_next/image?url=${encodeURIComponent(friend.avatar)}&w=256&q=75`}
                             alt={friend.handle}
                           />
                           <AvatarFallback>

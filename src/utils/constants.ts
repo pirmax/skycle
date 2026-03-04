@@ -11,7 +11,6 @@ export const MAX_PEOPLE_PER_CIRCLE: number = 50;
 export const MIN_CIRCLE: number = 1;
 export const MAX_CIRCLE: number = 9;
 export const MAX_SKEETS_ITERATIONS: number = 80;
-export const PROXY_URL: string = `${process.env.NEXT_PUBLIC_URL}/proxy`;
 export const VERIFIED_IMAGE_URL: string = `${process.env.NEXT_PUBLIC_URL}/verified.png`;
 export const DEFAULT_AVATAR: string = `${process.env.NEXT_PUBLIC_URL}/placeholder.png`;
 export const DEFAULT_POST_MESSAGE: string = `These are the people I interact the most with on Bluesky 💛 #Skycle`;

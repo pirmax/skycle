@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import type { ProfileDefinition, VersionDefinition } from "@/types";
-import { PROXY_URL } from "@/utils/constants";
 
 type ComparisonProps = {
   selectedVersion: VersionDefinition;
@@ -47,7 +46,10 @@ export function Comparison({ selectedVersion, currentData }: ComparisonProps): J
                     rel="noreferrer"
                   >
                     <Avatar className="size-12">
-                      <AvatarImage src={`${PROXY_URL}?url=${friend.avatar}`} alt={friend.handle} />
+                      <AvatarImage
+                        src={`/_next/image?url=${encodeURIComponent(friend.avatar)}&w=256&q=75`}
+                        alt={friend.handle}
+                      />
                       <AvatarFallback>
                         <Image
                           src={`/placeholder.png`}
@@ -84,7 +86,10 @@ export function Comparison({ selectedVersion, currentData }: ComparisonProps): J
                     rel="noreferrer"
                   >
                     <Avatar className="size-12">
-                      <AvatarImage src={`${PROXY_URL}?url=${friend.avatar}`} alt={friend.handle} />
+                      <AvatarImage
+                        src={`/_next/image?url=${encodeURIComponent(friend.avatar)}&w=256&q=75`}
+                        alt={friend.handle}
+                      />
                       <AvatarFallback>
                         <Image
                           src={`/placeholder.png`}

@@ -8,7 +8,7 @@ import {
   Text as KonvaText,
 } from "react-konva";
 import useImage from "use-image";
-import { DEFAULT_AVATAR, PROXY_URL } from "@/utils/constants";
+import { DEFAULT_AVATAR } from "@/utils/constants";
 
 type ImageCircleProps = {
   label: string;
@@ -35,7 +35,8 @@ export function ImageCircle({
   onTap = (): void => {},
   interactive = false,
 }: ImageCircleProps) {
-  const [image, status] = useImage(`${PROXY_URL}?url=${source}`, "anonymous");
+  const optimizedUrl = `/_next/image?url=${encodeURIComponent(source)}&w=256&q=75`;
+  const [image, status] = useImage(optimizedUrl, "anonymous");
   const [placeholderImage] = useImage(`${DEFAULT_AVATAR}`, "anonymous");
 
   const avatar: HTMLImageElement | undefined = status === "loaded" ? image : placeholderImage;
