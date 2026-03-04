@@ -1,4 +1,3 @@
-import type { Version } from "@prisma/client";
 import { IconCloudDownload, IconGitCompare } from "@tabler/icons-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { useAtom } from "jotai/index";
@@ -13,6 +12,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import type { Version } from "@/generated/prisma/client";
 import { selectedVersionAtom, selectedVersionIdAtom } from "@/utils/maker-atom";
 
 export default function SheetVersions({ versions }: { versions: Version[] }) {

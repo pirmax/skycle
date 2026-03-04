@@ -1,6 +1,5 @@
 "use client";
 
-import type { Version } from "@prisma/client";
 import { IconLoader } from "@tabler/icons-react";
 import Color from "color";
 import { useAtom } from "jotai/index";
@@ -22,6 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { Version } from "@/generated/prisma/client";
 import type { User } from "@/lib/iron";
 import { coloursAtom, loadingAtom, modalAtom } from "@/utils/maker-atom";
 

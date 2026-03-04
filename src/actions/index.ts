@@ -2,7 +2,7 @@
 
 import { Agent, RichText } from "@atproto/api";
 import type { OAuthSession } from "@atproto/oauth-client";
-import type { Version } from "@prisma/client";
+import type { Version } from "@/generated/prisma/client";
 import createBlueskyClient from "@/lib/atproto";
 import getSession from "@/lib/iron";
 import { prisma } from "@/lib/prisma";

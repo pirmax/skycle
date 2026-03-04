@@ -1,8 +1,8 @@
+import type { JSX } from "react";
 import { getVersionsByHandle } from "@/actions";
 import { Shell } from "@/components/shell";
+import type { Version } from "@/generated/prisma/client";
 import getSession, { type User } from "@/lib/iron";
-import type { Version } from "@prisma/client";
-import type { JSX } from "react";
 
 export default async function Layout({
   params: { handle },
