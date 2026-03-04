@@ -1,8 +1,6 @@
 import sharp from "sharp";
 
-export const compressToUnder1MB = async (
-  data: Uint8Array | Buffer,
-): Promise<Uint8Array<ArrayBuffer>> => {
+export const compressToUnder1MB = async (data: ArrayBuffer): Promise<Uint8Array> => {
   const maxSize = 1024 * 1024;
   let quality = 90;
 
@@ -18,5 +16,5 @@ export const compressToUnder1MB = async (
     compressed.byteOffset + compressed.byteLength,
   );
 
-  return new Uint8Array(buffer) as Uint8Array<ArrayBuffer>;
+  return new Uint8Array(buffer);
 };

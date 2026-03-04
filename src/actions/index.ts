@@ -78,11 +78,7 @@ export const uploadOnBluesky = async (formData: FormData): Promise<string> => {
   }
 
   const arrayBuffer = await file.arrayBuffer();
-  let data = new Uint8Array(arrayBuffer);
-
-  if (data.byteLength > 1024 * 1024) {
-    data = await compressToUnder1MB(data);
-  }
+  const data = await compressToUnder1MB(arrayBuffer);
 
   const uploadData = await agent.uploadBlob(data, {
     encoding: file.type,
