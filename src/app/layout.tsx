@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Skycle.app — Generate your friends Bluesky circle easily",
   description:
     "Generate your circle with avatars of your friends Bluesky easily",
-  metadataBase: new URL("https://skycle.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_URL || "http://localhost:3000"),
   icons: "/favicon.ico",
   openGraph: {
     images: [
