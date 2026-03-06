@@ -44,7 +44,8 @@ export const MainProviderContext: Context<ContextProps> = createContext<{
 export const MainProvider = ({ children }: ProviderProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const toolbarRef: MutableRefObject<HTMLDivElement | null> = useRef<HTMLDivElement | null>(null);
+  const toolbarRef: MutableRefObject<HTMLDivElement | null> =
+    useRef<HTMLDivElement | null>(null);
   const layersRef: MutableRefObject<Layer[]> = useRef<Layer[]>([]);
   const stagesRef: MutableRefObject<Stage[]> = useRef<Stage[]>([]);
 
@@ -72,7 +73,7 @@ export const MainProvider = ({ children }: ProviderProps) => {
       }}
     >
       {isLoading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-90 z-[100]">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-white bg-opacity-90">
           <div className="animate-spin">
             <IconLoader className="size-16 animate-spin" />
           </div>

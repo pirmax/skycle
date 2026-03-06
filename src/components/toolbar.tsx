@@ -1,7 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IconDownload, IconTool, IconUpload, IconUsers, IconVersions } from "@tabler/icons-react";
+import {
+  IconDownload,
+  IconTool,
+  IconUpload,
+  IconUsers,
+  IconVersions,
+} from "@tabler/icons-react";
 import clsx from "clsx";
 import Color from "color";
 import { useAtom } from "jotai/index";
@@ -10,7 +16,7 @@ import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useContext, useEffect, useState, type JSX } from "react";
+import { type JSX, useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -73,7 +79,8 @@ export default function Toolbar({
   const [downloadDialogOpen, setDownloadDialogOpen] = useState<boolean>(false);
   const [uploadDialogOpen, setUploadDialogOpen] = useState<boolean>(false);
 
-  const { layersRef, toolbarRef, setIsLoading } = useContext(MainProviderContext);
+  const { layersRef, toolbarRef, setIsLoading } =
+    useContext(MainProviderContext);
 
   const downloadForm = useForm<z.infer<typeof downloadFormSchema>>({
     mode: "onChange",
@@ -126,7 +133,10 @@ export default function Toolbar({
       setLoginDialogOpen(false);
       setUploadDialogOpen(false);
     } catch (error: unknown) {
-      toast.error((error as Error).message || "An error occurred while downloading the circle.");
+      toast.error(
+        (error as Error).message ||
+          "An error occurred while downloading the circle.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -164,7 +174,10 @@ export default function Toolbar({
       setUploadDialogOpen(false);
     } catch (error: unknown) {
       console.error(error);
-      toast.error((error as Error).message || "An error occurred while uploading the circle.");
+      toast.error(
+        (error as Error).message ||
+          "An error occurred while uploading the circle.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -197,7 +210,8 @@ export default function Toolbar({
         .filter((child): child is Konva.Rect | Konva.Image => {
           return (
             (child instanceof Konva.Rect || child instanceof Konva.Image) &&
-            (child.getAttr("name") === "background" || child.getAttr("name") === "image")
+            (child.getAttr("name") === "background" ||
+              child.getAttr("name") === "image")
           );
         });
 
@@ -292,7 +306,7 @@ export default function Toolbar({
       <div
         ref={toolbarRef}
         className={clsx(
-          "group fixed lg:inset-y-0 inset-x-0 lg:inset-x-auto bottom-0 z-40 left-0 lg:max-w-lg bg-transparent border-t lg:border-t-0 lg:border-r",
+          "group fixed inset-x-0 bottom-0 left-0 z-40 border-t bg-transparent lg:inset-x-auto lg:inset-y-0 lg:max-w-lg lg:border-t-0 lg:border-r",
           {
             "border-black": backgroundColour.isLight(),
             "border-white": backgroundColour.isDark(),
@@ -302,10 +316,10 @@ export default function Toolbar({
           backgroundColor: `${colors.background}`,
         }}
       >
-        <div className="flex flex-row lg:flex-col h-20 lg:h-screen content-center items-center justify-between select-none">
+        <div className="flex h-20 select-none flex-row content-center items-center justify-between lg:h-screen lg:flex-col">
           <Link
             href="/"
-            className="hidden lg:block p-5 aspect-square"
+            className="hidden aspect-square p-5 lg:block"
             onClick={(event) => {
               event.preventDefault();
               router.push("/");
@@ -335,7 +349,7 @@ export default function Toolbar({
                 key={item.name}
                 tabIndex={index}
                 className={cn(
-                  "group flex flex-col items-center justify-center space-y-2 h-full w-full bg-transparent px-3 py-2 text-center font-bold hover:drop-shadow-lg hover:bg-primary/50",
+                  "group flex h-full w-full flex-col items-center justify-center space-y-2 bg-transparent px-3 py-2 text-center font-bold hover:bg-primary/50 hover:drop-shadow-lg",
                   {
                     // '': item.name === modal,
                     "text-black": backgroundColour.isLight(),
@@ -346,7 +360,7 @@ export default function Toolbar({
                 onClick={item.onClick}
               >
                 {item.icon}
-                <span className="truncate text-xs lg:text-lg uppercase font-bold tracking-tighter">
+                <span className="truncate font-bold text-xs uppercase tracking-tighter lg:text-lg">
                   {item.text}
                 </span>
               </button>
@@ -355,13 +369,18 @@ export default function Toolbar({
         </div>
       </div>
       <Form {...downloadForm}>
-        <AlertDialog open={downloadDialogOpen} onOpenChange={setDownloadDialogOpen}>
+        <AlertDialog
+          open={downloadDialogOpen}
+          onOpenChange={setDownloadDialogOpen}
+        >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Are you sure to download this circle ?</AlertDialogTitle>
+              <AlertDialogTitle>
+                Are you sure to download this circle ?
+              </AlertDialogTitle>
               <AlertDialogDescription>
-                The circle image will be downloaded to your device and then you can easily share it
-                on Bluesky.
+                The circle image will be downloaded to your device and then you
+                can easily share it on Bluesky.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <FormField
@@ -394,10 +413,12 @@ export default function Toolbar({
         <AlertDialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Are you sure to upload this circle on Bluesky ?</AlertDialogTitle>
+              <AlertDialogTitle>
+                Are you sure to upload this circle on Bluesky ?
+              </AlertDialogTitle>
               <AlertDialogDescription>
-                The circle image will be uploaded to Bluesky and then you can easily share it with
-                your friends.
+                The circle image will be uploaded to Bluesky and then you can
+                easily share it with your friends.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <FormField
@@ -433,9 +454,9 @@ export default function Toolbar({
               You must be logged in to upload this circle on Bluesky.
             </AlertDialogTitle>
             <AlertDialogDescription>
-              To upload this circle and interact with your account, you need to be logged in on
-              Bluesky. If you’re not, click on the button and you’ll be redirected to the login
-              page.
+              To upload this circle and interact with your account, you need to
+              be logged in on Bluesky. If you’re not, click on the button and
+              you’ll be redirected to the login page.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -457,7 +478,8 @@ export default function Toolbar({
                 } catch (error: unknown) {
                   setIsLoading(false);
                   toast.error(
-                    (error as Error).message || "An error occurred while logging in on Bluesky.",
+                    (error as Error).message ||
+                      "An error occurred while logging in on Bluesky.",
                     {
                       description:
                         "Please try again. If the problem persists, contact the support.",

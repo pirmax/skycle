@@ -25,7 +25,11 @@ export default function SheetBase({
   children,
 }: SheetBaseProps): JSX.Element {
   return (
-    <Sheet open={modal === name} defaultOpen={false} onOpenChange={(): void => setModal(null)}>
+    <Sheet
+      open={modal === name}
+      defaultOpen={false}
+      onOpenChange={(): void => setModal(null)}
+    >
       <SheetContent className="overflow-y-auto w-full sm:max-w-lg">
         <SheetHeader>
           <SheetTitle>{title}</SheetTitle>

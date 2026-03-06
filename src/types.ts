@@ -12,7 +12,7 @@ export type ProfileDefinition = {
     quotes: number;
     shares: number;
   };
-}
+};
 
 export type OwnerProfileDefinition = ProfileDefinition;
 export type GroupOfProfilesDefinition = ProfileDefinition[];
@@ -22,18 +22,18 @@ export type LayoutDefinition = {
   radius: number;
   itemRadius: number;
   itemPositions: number[];
-}
+};
 
 export type GroupOfLayoutsDefinition = LayoutDefinition[];
 
 export type VersionDefinition = {
   own: OwnerProfileDefinition;
   friends: GroupOfProfilesDefinition;
-}
+};
 
 export type CircleDefinition = {
   numberOfItems: number;
-}
+};
 
 export type UnsplashResult = {
   id: string;
@@ -45,4 +45,4 @@ export type UnsplashResult = {
   height: number;
   alt_description: string;
   color: string;
-}
+};

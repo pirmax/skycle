@@ -11,7 +11,13 @@ export function AppScreen({ children, className, ...props }: AppScreenProps) {
   return (
     <div className={clsx("flex flex-col", className)} {...props}>
       <div className="px-4 pt-4">
-        <Image src="/logo.png" alt="Skycle" className="size-20 mx-auto" width="480" height="480" />
+        <Image
+          src="/logo.png"
+          alt="Skycle"
+          className="mx-auto size-20"
+          width="480"
+          height="480"
+        />
       </div>
       {children}
     </div>
@@ -57,7 +63,7 @@ AppScreen.Subtitle = forwardRef(function AppScreenSubtitle(
   ref: React.ForwardedRef<HTMLDivElement>,
 ) {
   return (
-    <div ref={ref} className="text-sm text-black">
+    <div ref={ref} className="text-black text-sm">
       {children}
     </div>
   );

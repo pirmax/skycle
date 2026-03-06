@@ -44,7 +44,10 @@ export function Shell({
   const mainColor: string = backgroundColor.isLight() ? "#282c34" : "#ffffff";
 
   return (
-    <div className="fixed size-full" style={{ backgroundColor: colours.background }}>
+    <div
+      className="fixed size-full"
+      style={{ backgroundColor: colours.background }}
+    >
       <SheetBase
         modal={modal}
         setModal={setModal}
@@ -75,7 +78,9 @@ export function Shell({
         <SheetVersions versions={versions} />
       </SheetBase>
 
-      <div className="transition bottom-18 fixed inset-0 z-10 md:bottom-24">{children}</div>
+      <div className="transition bottom-18 fixed inset-0 z-10 md:bottom-24">
+        {children}
+      </div>
 
       <div className="absolute z-50 top-10 right-10">
         {user && (
@@ -83,7 +88,9 @@ export function Shell({
             <DropdownMenuTrigger asChild>
               <Avatar className="size-14 cursor-pointer shadow-2xl">
                 <AvatarImage src={user.avatar || ""} alt={user.handle} />
-                <AvatarFallback>{user.handle.charAt(0).toUpperCase()}</AvatarFallback>
+                <AvatarFallback>
+                  {user.handle.charAt(0).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -105,7 +112,10 @@ export function Shell({
 
       {!modal && loading && (
         <div className="absolute z-50 top-0 right-0 m-5">
-          <IconLoader className="h-6 md:h-10 w-auto animate-spin" style={{ color: mainColor }} />
+          <IconLoader
+            className="h-6 md:h-10 w-auto animate-spin"
+            style={{ color: mainColor }}
+          />
         </div>
       )}
 

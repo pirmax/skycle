@@ -8,7 +8,10 @@ export const distributeItems = (
   let remainingItems: ProfileDefinition[] = [...friends];
 
   circlesDefinition.forEach((circleDefinition: CircleDefinition): void => {
-    const circleItems: ProfileDefinition[] = remainingItems.slice(0, circleDefinition.numberOfItems);
+    const circleItems: ProfileDefinition[] = remainingItems.slice(
+      0,
+      circleDefinition.numberOfItems,
+    );
 
     distribution.push(circleItems);
 

@@ -32,7 +32,9 @@ export function Header() {
             <Link href="https://bsky.app/profile/skycle.app" target="_blank">
               <Button variant="default">
                 <IconBrandBluesky className="size-4 sm:mr-2" />
-                <span className="hidden sm:inline-block">Follow Skycle on Bluesky</span>
+                <span className="hidden sm:inline-block">
+                  Follow Skycle on Bluesky
+                </span>
               </Button>
             </Link>
           </div>

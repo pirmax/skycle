@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -12,8 +12,14 @@ type ComparisonProps = {
   currentData: VersionDefinition;
 };
 
-export function Comparison({ selectedVersion, currentData }: ComparisonProps): JSX.Element {
-  const { appeared, disappeared } = compareFriends(selectedVersion, currentData);
+export function Comparison({
+  selectedVersion,
+  currentData,
+}: ComparisonProps): JSX.Element {
+  const { appeared, disappeared } = compareFriends(
+    selectedVersion,
+    currentData,
+  );
 
   return (
     <>
@@ -25,11 +31,16 @@ export function Comparison({ selectedVersion, currentData }: ComparisonProps): J
             <span>Friends appeared</span>
           </h3>
           {appeared.length === 0 ? (
-            <p className="text-muted-foreground text-sm">No friends appeared.</p>
+            <p className="text-muted-foreground text-sm">
+              No friends appeared.
+            </p>
           ) : (
             <div className="flex flex-col space-y-2 text-right">
               {appeared.map((friend: ProfileDefinition) => (
-                <div key={friend.did} className="flex items-center justify-end space-x-2 truncate">
+                <div
+                  key={friend.did}
+                  className="flex items-center justify-end space-x-2 truncate"
+                >
                   <div className="max-w-xs flex flex-col truncate leading-4">
                     <Link
                       href={`https://bsky.app/profile/${friend.handle}`}
@@ -39,7 +50,9 @@ export function Comparison({ selectedVersion, currentData }: ComparisonProps): J
                     >
                       {friend.displayName}
                     </Link>
-                    <span className="truncate text-xs text-muted-foreground">@{friend.handle}</span>
+                    <span className="truncate text-xs text-muted-foreground">
+                      @{friend.handle}
+                    </span>
                   </div>
                   <Link
                     href={`https://bsky.app/profile/${friend.handle}`}
@@ -73,7 +86,9 @@ export function Comparison({ selectedVersion, currentData }: ComparisonProps): J
             <Badge>{disappeared.length}</Badge>
           </h3>
           {disappeared.length === 0 ? (
-            <p className="text-muted-foreground text-sm">No friends disappeared.</p>
+            <p className="text-muted-foreground text-sm">
+              No friends disappeared.
+            </p>
           ) : (
             <div className="flex flex-col space-y-2">
               {disappeared.map((friend: ProfileDefinition) => (
@@ -111,7 +126,9 @@ export function Comparison({ selectedVersion, currentData }: ComparisonProps): J
                     >
                       {friend.displayName}
                     </Link>
-                    <span className="truncate text-xs text-muted-foreground">@{friend.handle}</span>
+                    <span className="truncate text-xs text-muted-foreground">
+                      @{friend.handle}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -128,7 +145,10 @@ type ComparisonResult = {
   disappeared: ProfileDefinition[];
 };
 
-function compareFriends(base: VersionDefinition, other: VersionDefinition): ComparisonResult {
+function compareFriends(
+  base: VersionDefinition,
+  other: VersionDefinition,
+): ComparisonResult {
   const baseDids = new Set(base.friends.map((f) => f.did));
   const otherDids = new Set(other.friends.map((f) => f.did));
 

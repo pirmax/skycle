@@ -4,7 +4,8 @@ export const sentenceCase = (string: string): string => {
     (c: string): string => ` ${c.toLowerCase()}`,
   );
 
-  const withCapital: string = withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1);
+  const withCapital: string =
+    withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1);
 
   return withCapital.trim();
 };

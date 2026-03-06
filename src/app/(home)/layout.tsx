@@ -1,8 +1,12 @@
+import type { ReactNode } from "react";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import type { JSX, ReactNode } from "react";
 
-export default function Layout({ children }: { children: ReactNode }): JSX.Element {
+type LayoutProps = {
+  children: ReactNode;
+};
+
+export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <Header />

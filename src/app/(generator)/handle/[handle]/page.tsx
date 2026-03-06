@@ -15,16 +15,9 @@ type PageProps = {
 
 export default async function Page(props: PageProps): Promise<JSX.Element> {
   const searchParams = await props.searchParams;
-
-  const {
-    period = null
-  } = searchParams;
-
+  const { period = null } = searchParams;
   const params = await props.params;
-
-  const {
-    handle
-  } = params;
+  const { handle } = params;
 
   try {
     const data: {

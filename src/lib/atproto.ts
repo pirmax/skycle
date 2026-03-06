@@ -2,7 +2,9 @@ import { NodeOAuthClient } from "@atproto/oauth-client-node";
 import type { PrismaClient } from "@/generated/prisma/client";
 import { SessionStore, StateStore } from "@/lib/storage";
 
-const createBlueskyClient = async (prisma: PrismaClient): Promise<NodeOAuthClient> => {
+const createBlueskyClient = async (
+  prisma: PrismaClient,
+): Promise<NodeOAuthClient> => {
   const baseUrl: string = process.env.NEXT_PUBLIC_URL as string;
 
   return new NodeOAuthClient({

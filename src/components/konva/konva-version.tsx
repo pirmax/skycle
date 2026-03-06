@@ -2,7 +2,11 @@ import { useAtom } from "jotai/index";
 import type { Layer } from "konva/lib/Layer";
 import type { Stage } from "konva/lib/Stage";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { Group as KonvaGroup, Layer as KonvaLayer, Stage as KonvaStage } from "react-konva";
+import {
+  Group as KonvaGroup,
+  Layer as KonvaLayer,
+  Stage as KonvaStage,
+} from "react-konva";
 import { Circle } from "@/components/konva/circle";
 import { ImageCircle } from "@/components/konva/image-circle";
 import { MainProviderContext } from "@/providers/main-provider";
@@ -14,7 +18,11 @@ import type {
 } from "@/types";
 import { calculateLayout } from "@/utils/calculate-layout";
 import { CANVAS_PADDING, CANVAS_SIZE, CENTER_RADIUS } from "@/utils/constants";
-import { circlesDefinitionAtom, coloursAtom, friendsAtom } from "@/utils/maker-atom";
+import {
+  circlesDefinitionAtom,
+  coloursAtom,
+  friendsAtom,
+} from "@/utils/maker-atom";
 
 type KonvaProps = {
   index: number;
@@ -38,7 +46,11 @@ type Position = {
   y: PositionY;
 };
 
-export default function KonvaVersion({ index = 0, owner, circles }: KonvaProps) {
+export default function KonvaVersion({
+  index = 0,
+  owner,
+  circles,
+}: KonvaProps) {
   const mainProvider = useContext(MainProviderContext);
 
   const divRef = useRef<HTMLDivElement>(null);
@@ -108,14 +120,16 @@ export default function KonvaVersion({ index = 0, owner, circles }: KonvaProps) 
                 interactive={false}
               />
             )}
-            {groupOfLayouts.map((circleLayout: LayoutDefinition, circleIndex: number) => (
-              <Circle
-                key={circleIndex}
-                layout={circleLayout}
-                items={circles[circleIndex]}
-                interactive={false}
-              />
-            ))}
+            {groupOfLayouts.map(
+              (circleLayout: LayoutDefinition, circleIndex: number) => (
+                <Circle
+                  key={circleIndex}
+                  layout={circleLayout}
+                  items={circles[circleIndex]}
+                  interactive={false}
+                />
+              ),
+            )}
           </KonvaGroup>
         </KonvaLayer>
       </KonvaStage>

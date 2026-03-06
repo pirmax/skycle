@@ -21,7 +21,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -63,13 +69,16 @@ export function SheetConfigurator(): JSX.Element {
   const [query, setQuery] = useState<string>(PLACEHOLDER());
   const [backgrounds, setBackgrounds] = useState<UnsplashResult[]>([]);
 
-  const onChangeHandle = useDebouncedCallback(async (query: string): Promise<void> => {
-    if (query.length > 0) {
-      setBackgrounds(await searchBackground(query));
-    } else {
-      setBackgrounds([]);
-    }
-  }, 500);
+  const onChangeHandle = useDebouncedCallback(
+    async (query: string): Promise<void> => {
+      if (query.length > 0) {
+        setBackgrounds(await searchBackground(query));
+      } else {
+        setBackgrounds([]);
+      }
+    },
+    500,
+  );
 
   useEffect(() => {
     if (query.length > 0) {
@@ -78,7 +87,10 @@ export function SheetConfigurator(): JSX.Element {
   }, [onChangeHandle, query]);
 
   const randomizeColor = (key: string) => {
-    setColour(key, `#${((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")}`);
+    setColour(
+      key,
+      `#${((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")}`,
+    );
 
     toast.success("Color randomized!", {
       description: "You can now see the new color of your circle.",
@@ -113,7 +125,9 @@ export function SheetConfigurator(): JSX.Element {
     }
   };
 
-  const handleCursorChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleCursorChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
     const value = Number(event.target.value);
     const length = circlesDefinition.length;
 
@@ -141,7 +155,9 @@ export function SheetConfigurator(): JSX.Element {
           <Card>
             <CardHeader>
               <CardTitle>Circles</CardTitle>
-              <CardDescription>Drag the slider below to add or remove circles.</CardDescription>
+              <CardDescription>
+                Drag the slider below to add or remove circles.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <input
@@ -169,7 +185,8 @@ export function SheetConfigurator(): JSX.Element {
             <CardHeader>
               <CardTitle>Friends</CardTitle>
               <CardDescription>
-                Drag the sliders below to adjust the number of friends you want to have per circle.
+                Drag the sliders below to adjust the number of friends you want
+                to have per circle.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -186,7 +203,9 @@ export function SheetConfigurator(): JSX.Element {
                         htmlFor={`circle-${index}`}
                         className="flex items-center justify-between"
                       >
-                        <span className="font-bold">{ordinalNumbers(index + 1)} circle</span>
+                        <span className="font-bold">
+                          {ordinalNumbers(index + 1)} circle
+                        </span>
                         <span className="inline-flex items-center rounded bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">
                           {circle.numberOfItems}
                         </span>
@@ -199,7 +218,9 @@ export function SheetConfigurator(): JSX.Element {
                         max={MAX_PEOPLE_PER_CIRCLE}
                         value={circle.numberOfItems}
                         step={1}
-                        onChange={(e) => setNumberOfItems(index, Number(e.target.value))}
+                        onChange={(e) =>
+                          setNumberOfItems(index, Number(e.target.value))
+                        }
                       />
                     </div>
                   ),
@@ -221,8 +242,8 @@ export function SheetConfigurator(): JSX.Element {
             <CardHeader>
               <CardTitle>Background</CardTitle>
               <CardDescription>
-                Look for the best background image so that your circle looks as attractive as
-                possible.
+                Look for the best background image so that your circle looks as
+                attractive as possible.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -273,8 +294,9 @@ export function SheetConfigurator(): JSX.Element {
             <CardHeader>
               <CardTitle>Colors</CardTitle>
               <CardDescription>
-                Customize all the colors of your circle, from the color of the joints, through the
-                color of the circles, to the background color.
+                Customize all the colors of your circle, from the color of the
+                joints, through the color of the circles, to the background
+                color.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -289,7 +311,10 @@ export function SheetConfigurator(): JSX.Element {
                         onChange={(event) => setColour(key, event.target.value)}
                         className="bg-transparent border-none"
                       />
-                      <label className="ml-2 font-medium" htmlFor={`${key}-colour`}>
+                      <label
+                        className="ml-2 font-medium"
+                        htmlFor={`${key}-colour`}
+                      >
                         {sentenceCase(key)}
                       </label>
                     </div>
@@ -313,7 +338,8 @@ export function SheetConfigurator(): JSX.Element {
                   onClick={() => {
                     setRandomColours();
                     toast.success("Colors randomized!", {
-                      description: "You can now see the new colors of your circle.",
+                      description:
+                        "You can now see the new colors of your circle.",
                     });
                   }}
                   className="w-full"
@@ -338,18 +364,27 @@ export function SheetConfigurator(): JSX.Element {
             <CardHeader>
               <CardTitle>More</CardTitle>
               <CardDescription>
-                Our application works with the shares of our users, if you want to contribute to its
-                success, you can leave the box checked above.
+                Our application works with the shares of our users, if you want
+                to contribute to its success, you can leave the box checked
+                above.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="mt-2 flex flex-col space-y-3">
                 <div className="flex items-center space-x-2">
-                  <Switch id="watermark-mode" checked={watermark} onCheckedChange={setWatermark} />
+                  <Switch
+                    id="watermark-mode"
+                    checked={watermark}
+                    onCheckedChange={setWatermark}
+                  />
                   <Label htmlFor="watermark-mode">Apply Skycle Watermark</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Switch id="verified-mode" checked={verified} onCheckedChange={setVerified} />
+                  <Switch
+                    id="verified-mode"
+                    checked={verified}
+                    onCheckedChange={setVerified}
+                  />
                   <Label htmlFor="verified-mode">Apply Verified Check</Label>
                 </div>
               </div>

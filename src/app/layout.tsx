@@ -1,14 +1,13 @@
 import "@/styles/globals.css";
 
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
-import type { ComponentType, ReactNode } from "react";
+import type { ReactNode } from "react";
 import Providers from "@/app/providers";
-import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Skycle.app — Generate your friends Bluesky circle easily",
-  description: "Generate your circle with avatars of your friends Bluesky easily",
+  description:
+    "Generate your circle with avatars of your friends Bluesky easily",
   metadataBase: new URL("https://skycle.app"),
   icons: "/favicon.ico",
   openGraph: {
@@ -23,11 +22,11 @@ export const metadata: Metadata = {
   },
 };
 
-const CookieConsent: ComponentType = dynamic(() => import("@/components/cookie-consent"), {
-  ssr: false,
-});
+type RootLayoutProps = {
+  children: ReactNode;
+};
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className="h-full">
       <body className="h-full select-none">
@@ -35,8 +34,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div vaul-drawer-wrapper="" className="h-full">
             {children}
           </div>
-          <Toaster />
-          <CookieConsent />
         </Providers>
       </body>
     </html>

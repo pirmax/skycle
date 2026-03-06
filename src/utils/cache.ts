@@ -11,7 +11,11 @@ const getCache = async (name: string): Promise<string | null> => {
   return JSON.parse(data || "null");
 };
 
-const setCache = async (name: string, data: string|object, time: number): Promise<void> => {
+const setCache = async (
+  name: string,
+  data: string | object,
+  time: number,
+): Promise<void> => {
   const key: string = getKey(name);
   await redis.set(key, JSON.stringify(data), "EX", time);
 };

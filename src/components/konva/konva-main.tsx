@@ -23,7 +23,12 @@ import type {
   OwnerProfileDefinition,
 } from "@/types";
 import { calculateLayout } from "@/utils/calculate-layout";
-import { CANVAS_PADDING, CANVAS_SIZE, CENTER_RADIUS, WATERMARK } from "@/utils/constants";
+import {
+  CANVAS_PADDING,
+  CANVAS_SIZE,
+  CENTER_RADIUS,
+  WATERMARK,
+} from "@/utils/constants";
 import { getCenter } from "@/utils/get-center";
 import { getDistance } from "@/utils/get-distance";
 import {
@@ -72,7 +77,11 @@ type Center = {
   y: PositionY;
 };
 
-export default function KonvaVersion({ index = 0, owner, circles }: KonvaProps) {
+export default function KonvaVersion({
+  index = 0,
+  owner,
+  circles,
+}: KonvaProps) {
   const mainProvider = useContext(MainProviderContext);
 
   const [, setFriends] = useAtom(friendsAtom);
@@ -123,7 +132,9 @@ export default function KonvaVersion({ index = 0, owner, circles }: KonvaProps) 
         } as Size);
 
         const scale: Scale =
-          width > height ? height / CANVAS_SIZE - 0.1 : width / CANVAS_SIZE - 0.1;
+          width > height
+            ? height / CANVAS_SIZE - 0.1
+            : width / CANVAS_SIZE - 0.1;
 
         setScale(scale);
 
@@ -133,7 +144,8 @@ export default function KonvaVersion({ index = 0, owner, circles }: KonvaProps) 
         } as Position);
 
         if (backgroundImage) {
-          const imageRatio: Ratio = backgroundImage.width / backgroundImage.height;
+          const imageRatio: Ratio =
+            backgroundImage.width / backgroundImage.height;
 
           let backgroundWidth = 0;
           let backgroundHeight = 0;
@@ -165,7 +177,9 @@ export default function KonvaVersion({ index = 0, owner, circles }: KonvaProps) 
   }, [toolbar, backgroundImage]);
 
   const backgroundColor = Color(colours.background);
-  const watermarkColor: Colour = backgroundColor.isLight() ? "#282c34" : "#ffffff";
+  const watermarkColor: Colour = backgroundColor.isLight()
+    ? "#282c34"
+    : "#ffffff";
 
   const handleWheel = (event: Konva.KonvaEventObject<WheelEvent>): void => {
     event.evt.preventDefault();
@@ -186,7 +200,8 @@ export default function KonvaVersion({ index = 0, owner, circles }: KonvaProps) 
       y: point.y / oldScale - layer.y() / oldScale,
     };
 
-    const newScale: number = event.evt.deltaY < 0 ? oldScale * 1.02 : oldScale / 1.02;
+    const newScale: number =
+      event.evt.deltaY < 0 ? oldScale * 1.02 : oldScale / 1.02;
 
     if (newScale <= 0.3 || newScale > 2.2) {
       return;
@@ -330,14 +345,16 @@ export default function KonvaVersion({ index = 0, owner, circles }: KonvaProps) 
               interactive={true}
             />
           )}
-          {groupOfLayouts.map((circleLayout: LayoutDefinition, circleIndex: number) => (
-            <Circle
-              key={circleIndex}
-              layout={circleLayout}
-              items={circles[circleIndex]}
-              interactive={true}
-            />
-          ))}
+          {groupOfLayouts.map(
+            (circleLayout: LayoutDefinition, circleIndex: number) => (
+              <Circle
+                key={circleIndex}
+                layout={circleLayout}
+                items={circles[circleIndex]}
+                interactive={true}
+              />
+            ),
+          )}
           {watermark && (
             <KonvaText
               name="watermark"

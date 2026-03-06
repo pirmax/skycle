@@ -5,13 +5,14 @@ import { Container } from "@/components/container";
 
 export function Footer() {
   return (
-    <footer className="border-t border-gray-200">
+    <footer className="border-gray-200 border-t">
       <Container className="py-10">
         <div className="mt-5 flex flex-col items-center md:flex-row md:justify-between">
-          <p className="text-sm text-gray-500">
-            &copy; Copyright {new Date().getFullYear()} Skycle. All Rights Reserved.
+          <p className="text-gray-500 text-sm">
+            &copy; Copyright {new Date().getFullYear()} Skycle. All Rights
+            Reserved.
           </p>
-          <ul className="text-sm text-gray-500 md:mt-0 flex items-center space-x-2">
+          <ul className="flex items-center space-x-2 text-gray-500 text-sm md:mt-0">
             <li>
               <Link href={`https://paypal.me/pirmax`} target="_blank">
                 Support Me

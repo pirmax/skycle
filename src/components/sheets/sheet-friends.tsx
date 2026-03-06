@@ -26,12 +26,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import type { ProfileDefinition } from "@/types";
 import { SCORES } from "@/utils/constants";
-import { friendsAtom, hideFriendAtom, unHideFriendsAtom } from "@/utils/maker-atom";
+import {
+  friendsAtom,
+  hideFriendAtom,
+  unHideFriendsAtom,
+} from "@/utils/maker-atom";
 import { ordinalNumbers } from "@/utils/ordinal-numbers";
 
 export default function SheetFriends() {
@@ -45,8 +53,9 @@ export default function SheetFriends() {
         <IconBubbleText className="h-4 w-4" />
         <AlertTitle>Just a little tip!</AlertTitle>
         <AlertDescription>
-          You can also hide friends by clicking on their avatar in the circle preview. But you can
-          unhide them all at once by clicking the button below.
+          You can also hide friends by clicking on their avatar in the circle
+          preview. But you can unhide them all at once by clicking the button
+          below.
         </AlertDescription>
       </Alert>
       <div className="mt-2 flex flex-col items-center justify-center">
@@ -81,7 +90,10 @@ export default function SheetFriends() {
               <div className="mt-2 flex flex-col space-y-2">
                 {circle.length > 0 &&
                   circle.map((friend: ProfileDefinition, index: number) => (
-                    <div key={index} className="w-full flex items-center justify-between space-x-3">
+                    <div
+                      key={index}
+                      className="w-full flex items-center justify-between space-x-3"
+                    >
                       <div className="flex items-center space-x-2 truncate">
                         <Avatar className="size-12">
                           <AvatarImage
@@ -112,7 +124,8 @@ export default function SheetFriends() {
                           <PopoverTrigger>
                             <span className="flex items-center space-x-1 whitespace-nowrap text-xs px-2">
                               <span>
-                                {friend.score} {friend.score > 1 ? "points" : "point"}
+                                {friend.score}{" "}
+                                {friend.score > 1 ? "points" : "point"}
                               </span>
                               <IconHelpCircle className="size-4 text-gray-400" />
                             </span>
@@ -120,10 +133,12 @@ export default function SheetFriends() {
                           <PopoverContent side="right" className="w-80">
                             <div className="grid gap-4">
                               <div className="space-y-2">
-                                <h4 className="font-medium leading-none">Score explanation</h4>
+                                <h4 className="font-medium leading-none">
+                                  Score explanation
+                                </h4>
                                 <p className="text-sm text-muted-foreground">
-                                  This score is calculated based on the interactions you have with
-                                  this user.
+                                  This score is calculated based on the
+                                  interactions you have with this user.
                                 </p>
                               </div>
                               <div className="grid gap-2">
@@ -201,7 +216,10 @@ export default function SheetFriends() {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
-                            <DropdownMenuItem asChild className="cursor-pointer">
+                            <DropdownMenuItem
+                              asChild
+                              className="cursor-pointer"
+                            >
                               <Link href={friend.url} target="_blank">
                                 <IconBrandBluesky className="size-4 text-black mr-2" />
                                 <span>View on Bluesky</span>
@@ -213,7 +231,8 @@ export default function SheetFriends() {
                                 hideFriend(friend.did);
 
                                 toast.success(`@${friend.handle} hidden!`, {
-                                  description: "This user will not be visible in the circles.",
+                                  description:
+                                    "This user will not be visible in the circles.",
                                 });
                               }}
                             >
@@ -225,7 +244,9 @@ export default function SheetFriends() {
                       </div>
                     </div>
                   ))}
-                {circle.length === 0 && <p className="text-sm">No users in this circle.</p>}
+                {circle.length === 0 && (
+                  <p className="text-sm">No users in this circle.</p>
+                )}
               </div>
               <div className="mt-5 bg-gray-100 p-3 rounded-lg">
                 <label
@@ -239,16 +260,22 @@ export default function SheetFriends() {
                     rows={5}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     defaultValue={circle
-                      .map((friend: ProfileDefinition): string => `@${friend.handle}`)
+                      .map(
+                        (friend: ProfileDefinition): string =>
+                          `@${friend.handle}`,
+                      )
                       .join(" ")}
                     onClick={async (
                       event: React.MouseEvent<HTMLTextAreaElement>,
                     ): Promise<void> => {
                       event.currentTarget.select();
-                      await navigator.clipboard.writeText(event.currentTarget.value);
+                      await navigator.clipboard.writeText(
+                        event.currentTarget.value,
+                      );
 
                       toast.success("Copied to clipboard!", {
-                        description: "Paste mentions, directly on your Bluesky skeet.",
+                        description:
+                          "Paste mentions, directly on your Bluesky skeet.",
                       });
                     }}
                   />

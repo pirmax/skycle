@@ -11,7 +11,11 @@ export const getCoordinates = (
   radius: number,
 ): PointCoordinate => {
   return {
-    x: radius * Math.cos(degreeToRadius(position)) + (CANVAS_SIZE + CANVAS_PADDING) / 2,
-    y: radius * Math.sin(degreeToRadius(position)) + (CANVAS_SIZE + CANVAS_PADDING) / 2,
+    x:
+      radius * Math.cos(degreeToRadius(position)) +
+      (CANVAS_SIZE + CANVAS_PADDING) / 2,
+    y:
+      radius * Math.sin(degreeToRadius(position)) +
+      (CANVAS_SIZE + CANVAS_PADDING) / 2,
   };
 };

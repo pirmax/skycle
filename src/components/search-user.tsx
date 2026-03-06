@@ -9,7 +9,13 @@ import { toast } from "sonner";
 import { useLocalStorage } from "usehooks-ts";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -17,15 +23,13 @@ import { MainProviderContext } from "@/providers/main-provider";
 
 const formSchema = z.object({
   handle: z.string().min(2).max(50),
-  range: z.string().refine((value) => {
-    return (
-      value === "this-year" ||
-      value === "last-six-months" ||
-      value === "last-month" ||
-      value === "seven-days" ||
-      value === "today"
-    );
-  }),
+  range: z.enum([
+    "this-year",
+    "last-six-months",
+    "last-month",
+    "seven-days",
+    "today",
+  ]),
 });
 
 export function SearchUser() {
@@ -44,7 +48,9 @@ export function SearchUser() {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>): Promise<void> => {
+  const onSubmit = async (
+    values: z.infer<typeof formSchema>,
+  ): Promise<void> => {
     try {
       setIsLoading(true);
 
@@ -67,7 +73,10 @@ export function SearchUser() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-5 flex flex-col gap-3">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mt-5 flex flex-col gap-3"
+      >
         <FormField
           control={form.control}
           name="range"
@@ -89,8 +98,14 @@ export function SearchUser() {
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="last-six-months" id="option-last-six-months" />
-                    <Label htmlFor="option-last-six-months" className="truncate">
+                    <RadioGroupItem
+                      value="last-six-months"
+                      id="option-last-six-months"
+                    />
+                    <Label
+                      htmlFor="option-last-six-months"
+                      className="truncate"
+                    >
                       Last 6 months
                     </Label>
                   </div>
@@ -124,7 +139,10 @@ export function SearchUser() {
             <FormItem>
               <FormControl>
                 <div className="relative drop-shadow-lg">
-                  <FormLabel htmlFor="search" className="absolute left-4 top-1/2 -translate-y-1/2">
+                  <FormLabel
+                    htmlFor="search"
+                    className="absolute top-1/2 left-4 -translate-y-1/2"
+                  >
                     <IconAt className="size-7 text-foreground" />
                     <span className="sr-only">Search a Bluesky account</span>
                   </FormLabel>
@@ -133,7 +151,7 @@ export function SearchUser() {
                     id="search"
                     placeholder="Search any account (as @jay.bsky.social or @pfrazee.com)"
                     autoFocus
-                    className="w-full text-base px-14 py-6 bg-background focus:bg-background"
+                    className="w-full bg-background px-14 py-6 text-base focus:bg-background"
                   />
                 </div>
               </FormControl>
@@ -143,7 +161,7 @@ export function SearchUser() {
         <Button
           type="submit"
           variant="default"
-          className="w-full flex items-center space-x-3"
+          className="flex w-full items-center space-x-3"
           size="lg"
         >
           <IconHammer className="size-4" />

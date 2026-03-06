@@ -17,7 +17,9 @@ import { selectedVersionAtom, selectedVersionIdAtom } from "@/utils/maker-atom";
 
 export default function SheetVersions({ versions }: { versions: Version[] }) {
   const [, setSelectedVersion] = useAtom(selectedVersionAtom);
-  const [selectedVersionId, setSelectedVersionId] = useAtom(selectedVersionIdAtom);
+  const [selectedVersionId, setSelectedVersionId] = useAtom(
+    selectedVersionIdAtom,
+  );
 
   return (
     <Accordion type="single" collapsible>
@@ -32,7 +34,10 @@ export default function SheetVersions({ versions }: { versions: Version[] }) {
             </div>
           </AccordionTrigger>
           <AccordionContent>
-            <div key={index} className="bg-muted rounded-lg overflow-hidden mb-2">
+            <div
+              key={index}
+              className="bg-muted rounded-lg overflow-hidden mb-2"
+            >
               <Preview
                 version={JSON.parse(version.generatedData)}
                 index={index + 1}
@@ -56,7 +61,9 @@ export default function SheetVersions({ versions }: { versions: Version[] }) {
                     <div className="mx-auto w-full max-w-3xl">
                       <Comparison
                         selectedVersion={JSON.parse(version.generatedData)}
-                        currentData={JSON.parse(versions[selectedVersionId].generatedData)}
+                        currentData={JSON.parse(
+                          versions[selectedVersionId].generatedData,
+                        )}
                       />
                     </div>
                   </div>
@@ -68,7 +75,8 @@ export default function SheetVersions({ versions }: { versions: Version[] }) {
                   setSelectedVersion(JSON.parse(version.generatedData));
                   setSelectedVersionId(index);
                   toast.success("Version loaded!", {
-                    description: "You can now compare this version with the current one.",
+                    description:
+                      "You can now compare this version with the current one.",
                   });
                 }}
                 className="w-full"

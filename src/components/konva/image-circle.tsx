@@ -39,7 +39,8 @@ export function ImageCircle({
   const [image, status] = useImage(optimizedUrl, "anonymous");
   const [placeholderImage] = useImage(`${DEFAULT_AVATAR}`, "anonymous");
 
-  const avatar: HTMLImageElement | undefined = status === "loaded" ? image : placeholderImage;
+  const avatar: HTMLImageElement | undefined =
+    status === "loaded" ? image : placeholderImage;
 
   const scaleX: number = (2 * radius) / (avatar?.naturalWidth ?? 1);
   const scaleY: number = (2 * radius) / (avatar?.naturalHeight ?? 1);
@@ -90,7 +91,12 @@ export function ImageCircle({
             shadowColor="black"
             cornerRadius={10}
           />
-          <KonvaText text={`@${label}`} fill="white" fontSize={16} padding={10} />
+          <KonvaText
+            text={`@${label}`}
+            fill="white"
+            fontSize={16}
+            padding={10}
+          />
         </KonvaLabel>
       )}
     </KonvaGroup>

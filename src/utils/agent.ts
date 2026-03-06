@@ -2,14 +2,14 @@ import { AtpAgent } from "@atproto/api";
 import type { AtpSessionData } from "@atproto/api/src/types";
 import Cache from "@/utils/cache";
 
-const key = "session-main"
+const key = "session-main";
 
 const agent: AtpAgent = new AtpAgent({
   service: "https://bsky.social",
 });
 
 export const getBlueskySession = async (): Promise<AtpSessionData> => {
-  const cache = await Cache.getCache(key) as AtpSessionData | null;
+  const cache = (await Cache.getCache(key)) as AtpSessionData | null;
 
   if (!cache) {
     const { data } = await agent.login({

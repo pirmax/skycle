@@ -3,7 +3,9 @@ import type { ProfileDefinition } from "@/types";
 import { DEFAULT_AVATAR } from "@/utils/constants";
 
 export const extractProfileInfo = (
-  user: AppBskyActorDefs.ProfileViewDetailed,
+  user:
+    | AppBskyActorDefs.ProfileViewDetailed
+    | AppBskyActorDefs.ProfileViewBasic,
 ): ProfileDefinition => {
   return {
     did: user.did,
@@ -16,6 +18,7 @@ export const extractProfileInfo = (
       typeof user.verification === "object" &&
       user.verification !== null &&
       "verifiedStatus" in user.verification &&
-      (user.verification as { verifiedStatus?: string }).verifiedStatus === "valid",
+      (user.verification as { verifiedStatus?: string }).verifiedStatus ===
+        "valid",
   };
 };

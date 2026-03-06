@@ -16,7 +16,13 @@ export function VerifiedCheck({ x, y, radius }: VerifiedCheckProps) {
 
   return (
     <KonvaGroup x={x + 60} y={y + 10}>
-      <KonvaImage image={image} x={-radius} y={-radius} scaleX={scaleX} scaleY={scaleY} />
+      <KonvaImage
+        image={image}
+        x={-radius}
+        y={-radius}
+        scaleX={scaleX}
+        scaleY={scaleY}
+      />
     </KonvaGroup>
   );
 }

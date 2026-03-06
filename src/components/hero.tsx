@@ -5,11 +5,13 @@ import { AppDemo } from "@/components/app-demo";
 import { Container } from "@/components/container";
 import { PhoneFrame } from "@/components/phone-frame";
 import { SearchUser } from "@/components/search-user";
-import type { ProfileDefinition } from "@/types";
+import type { VersionDefinition } from "@/types";
 
 type BackgroundIllustrationProps = React.SVGProps<SVGSVGElement>;
 
-function BackgroundIllustration({ ...props }: BackgroundIllustrationProps): JSX.Element {
+function BackgroundIllustration({
+  ...props
+}: BackgroundIllustrationProps): JSX.Element {
   const id: string = useId();
 
   return (
@@ -81,35 +83,33 @@ function BackgroundIllustration({ ...props }: BackgroundIllustrationProps): JSX.
   );
 }
 
-export function Hero({
-  data,
-}: {
-  data: {
-    own: ProfileDefinition;
-    friends: ProfileDefinition[];
-  };
-}) {
+type HeroProps = {
+  data: VersionDefinition;
+};
+
+export function Hero({ data }: HeroProps) {
   return (
-    <div className="mt-20 lg:mt-0 overflow-hidden pb-20 sm:py-32 lg:pb-32 xl:pb-36">
+    <div className="mt-20 overflow-hidden pb-20 sm:py-32 lg:mt-0 lg:pb-32 xl:pb-36">
       <Container>
         <div className="lg:grid lg:grid-cols-12 lg:gap-x-8 lg:gap-y-20">
-          <div className="relative z-10 mx-auto max-w-2xl lg:col-span-7 lg:max-w-none lg:pt-6 xl:col-span-6 text-center lg:text-left flex flex-col gap-5">
-            <h2 className="font-bold tracking-tight text-muted-foreground uppercase text-2xl">
+          <div className="relative z-10 mx-auto flex max-w-2xl flex-col gap-5 text-center lg:col-span-7 lg:max-w-none lg:pt-6 lg:text-left xl:col-span-6">
+            <h2 className="font-bold text-2xl text-muted-foreground uppercase tracking-tight">
               Skycle &mdash; The real honeycomb
             </h2>
-            <h1 className="text-5xl font-black tracking-tight md:text-7xl text-balance bg-gradient-to-br from-yellow-500 via-yellow-600 to-yellow-300 inline-block text-transparent bg-clip-text drop-shadow-lg">
+            <h1 className="inline-block text-balance bg-linear-to-br from-yellow-500 via-yellow-600 to-yellow-300 bg-clip-text font-black text-5xl text-transparent tracking-tight drop-shadow-lg md:text-7xl">
               Who are your best interactions on Bluesky ?
             </h1>
-            <p className="text-xl leading-6 font-medium text-foreground text-balance">
-              Skycle instantly generates a beautiful, shareable image that shows the people you
-              interact with the most on Bluesky. No sign-up, no hassle — just you and your circle.
+            <p className="text-balance font-medium text-foreground text-xl leading-6">
+              Skycle instantly generates a beautiful, shareable image that shows
+              the people you interact with the most on Bluesky. No sign-up, no
+              hassle — just you and your circle.
             </p>
             <div className="w-full">
               <SearchUser />
             </div>
           </div>
           <div className="relative mt-10 sm:mt-20 lg:col-span-5 lg:row-span-2 lg:mt-0 xl:col-span-6">
-            <BackgroundIllustration className="absolute left-1/2 top-4 h-[1026px] w-[1026px] -translate-x-1/3 stroke-gray-300/70 [mask-image:linear-gradient(to_bottom,white_20%,transparent_75%)] sm:top-16 sm:-translate-x-1/2 lg:-top-16 lg:ml-12 xl:-top-14 xl:ml-0" />
+            <BackgroundIllustration className="absolute top-4 left-1/2 h-[1026px] w-[1026px] -translate-x-1/3 stroke-gray-300/70 [mask-image:linear-gradient(to_bottom,white_20%,transparent_75%)] sm:top-16 sm:-translate-x-1/2 lg:-top-16 lg:ml-12 xl:-top-14 xl:ml-0" />
             <div className="-mx-4 h-[448px] px-9 [mask-image:linear-gradient(to_bottom,white_60%,transparent)] sm:mx-0 lg:absolute lg:-inset-x-10 lg:-top-10 lg:-bottom-20 lg:h-auto lg:px-0 lg:pt-10 xl:-bottom-32">
               <PhoneFrame className="mx-auto max-w-[366px]" priority>
                 <AppDemo data={data} />

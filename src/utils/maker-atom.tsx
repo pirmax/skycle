@@ -1,6 +1,10 @@
 import { atom, type Getter, type Setter } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import type { CircleDefinition, ProfileDefinition, VersionDefinition } from "@/types";
+import type {
+  CircleDefinition,
+  ProfileDefinition,
+  VersionDefinition,
+} from "@/types";
 
 export const modalAtom = atom<string | null>(null);
 export const loadingAtom = atom<boolean>(false);
@@ -13,7 +17,10 @@ export const selectedVersionIdAtom = atom<number>(0);
 export const handleAtom = atom<string | null>(null);
 export const friendsAtom = atom<ProfileDefinition[][]>([]);
 
-export const hiddenFriendsAtom = atomWithStorage<string[]>("skycleHiddenIDs", []);
+export const hiddenFriendsAtom = atomWithStorage<string[]>(
+  "skycleHiddenIDs",
+  [],
+);
 
 export const circlesDefinitionAtom = atom<CircleDefinition[]>([
   {
@@ -47,9 +54,12 @@ export const coloursAtom = atom<{
   connectingLines: "#282c34",
 });
 
-export const hideFriendAtom = atom(null, (get: Getter, set: Setter, did: string): void => {
-  set(hiddenFriendsAtom, [...get(hiddenFriendsAtom), did]);
-});
+export const hideFriendAtom = atom(
+  null,
+  (get: Getter, set: Setter, did: string): void => {
+    set(hiddenFriendsAtom, [...get(hiddenFriendsAtom), did]);
+  },
+);
 
 export const unHideFriendsAtom = atom(null, (_: Getter, set: Setter): void => {
   set(hiddenFriendsAtom, []);
@@ -78,17 +88,20 @@ export const setColourAtom = atom(
   },
 );
 
-export const setRandomColoursAtom = atom(null, (_: Getter, set: Setter): void => {
-  const background = `#${((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")}`;
-  const circleBorders = `#${((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")}`;
-  const connectingLines = `#${((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")}`;
+export const setRandomColoursAtom = atom(
+  null,
+  (_: Getter, set: Setter): void => {
+    const background = `#${((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")}`;
+    const circleBorders = `#${((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")}`;
+    const connectingLines = `#${((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")}`;
 
-  set(coloursAtom, {
-    background,
-    circleBorders,
-    connectingLines,
-  });
-});
+    set(coloursAtom, {
+      background,
+      circleBorders,
+      connectingLines,
+    });
+  },
+);
 
 export const setNumberOfItemsAtom = atom(
   null,

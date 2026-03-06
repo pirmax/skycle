@@ -3,7 +3,11 @@ import { Fragment } from "react";
 import { Circle as KonvaCircle } from "react-konva";
 import { ImageCircle } from "@/components/konva/image-circle";
 import { VerifiedCheck } from "@/components/konva/verified-check";
-import type { GroupOfProfilesDefinition, LayoutDefinition, ProfileDefinition } from "@/types";
+import type {
+  GroupOfProfilesDefinition,
+  LayoutDefinition,
+  ProfileDefinition,
+} from "@/types";
 import { CANVAS_PADDING, CANVAS_SIZE } from "@/utils/constants";
 import { getCoordinates, type PointCoordinate } from "@/utils/get-coordinates";
 import { coloursAtom, hideFriendAtom, verifiedAtom } from "@/utils/maker-atom";
@@ -35,7 +39,10 @@ export function Circle({
       />
 
       {items.map((item: ProfileDefinition, index: number) => {
-        const { x, y }: PointCoordinate = getCoordinates(itemPositions[index], radius);
+        const { x, y }: PointCoordinate = getCoordinates(
+          itemPositions[index],
+          radius,
+        );
 
         return (
           <Fragment key={item.did}>
@@ -51,7 +58,9 @@ export function Circle({
               onTap={() => hideFriend(item.did)}
               interactive={interactive}
             />
-            {item.verified && verified && <VerifiedCheck x={x} y={y} radius={itemRadius} />}
+            {item.verified && verified && (
+              <VerifiedCheck x={x} y={y} radius={itemRadius} />
+            )}
           </Fragment>
         );
       })}
