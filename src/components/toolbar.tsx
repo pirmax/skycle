@@ -201,7 +201,7 @@ export default function Toolbar({
     }[] = [];
 
     const groups = layer.getChildren().filter((node): node is Konva.Group => {
-      return node instanceof Konva.Group && node.getAttr("name") === "group";
+      return node instanceof Konva.Group && node.name() === "group";
     });
 
     for (const group of groups) {
@@ -210,8 +210,7 @@ export default function Toolbar({
         .filter((child): child is Konva.Rect | Konva.Image => {
           return (
             (child instanceof Konva.Rect || child instanceof Konva.Image) &&
-            (child.getAttr("name") === "background" ||
-              child.getAttr("name") === "image")
+            (child.name() === "background" || child.name() === "image")
           );
         });
 
