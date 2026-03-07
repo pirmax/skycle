@@ -68,3 +68,52 @@ export const SCORES: {
   perQuotes: 4,
   perShares: 2,
 };
+
+/**
+ * Calcule un score d'interaction sophistiqué basé sur:
+ * - Pondération logarithmique pour éviter la domination d'un seul type
+ * - Bonus de diversité pour les relations équilibrées
+ * - Bonus pour les interactions de haute qualité (replies et mentions)
+ * - Pénalité pour les relations unidimensionnelles
+ */
+export const calculateInteractionScore = (interactions: {
+  replies: number;
+  mentions: number;
+  quotes: number;
+  shares: number;
+}): number => {
+  const { replies, mentions, quotes, shares } = interactions;
+
+  // Pondération logarithmique pour éviter que les grandes quantités dominent
+  // log10(1+n) permet une croissance qui ralentit avec le volume
+  const repliesScore = replies > 0 ? Math.log10(1 + replies) * 10 : 0;
+  const mentionsScore = mentions > 0 ? Math.log10(1 + mentions) * 8 : 0;
+  const quotesScore = quotes > 0 ? Math.log10(1 + quotes) * 6 : 0;
+  const sharesScore = shares > 0 ? Math.log10(1 + shares) * 3 : 0;
+
+  // Score de base logarithmique
+  const baseScore = repliesScore + mentionsScore + quotesScore + sharesScore;
+
+  // Bonus de diversité: récompense les relations avec plusieurs types d'interactions
+  const typesCount = [replies, mentions, quotes, shares].filter(
+    (n) => n > 0,
+  ).length;
+  const diversityMultiplier = 1 + (typesCount - 1) * 0.3; // 1.0 → 1.3 → 1.6 → 1.9
+
+  // Bonus pour les interactions de haute qualité (conversations réelles)
+  // Les replies et mentions montrent un engagement actif
+  const highQualityCount = replies + mentions;
+  const qualityBonus =
+    highQualityCount > 0 ? Math.sqrt(highQualityCount) * 2 : 0;
+
+  // Bonus d'intensité: récompense les relations très actives
+  const totalInteractions = replies + mentions + quotes + shares;
+  const intensityBonus =
+    totalInteractions > 10 ? Math.log10(totalInteractions) * 3 : 0;
+
+  // Calcul final avec tous les composants
+  const finalScore =
+    (baseScore + qualityBonus + intensityBonus) * diversityMultiplier;
+
+  return Math.round(finalScore * 100) / 100; // Arrondi à 2 décimales
+};

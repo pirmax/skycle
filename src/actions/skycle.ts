@@ -32,7 +32,11 @@ import { saveVersion } from "@/actions/index";
 import type { ProfileDefinition, VersionDefinition } from "@/types";
 import agent, { getBlueskySession } from "@/utils/agent";
 import Cache from "@/utils/cache";
-import { HANDLE_REGEX, MAX_SKEETS_ITERATIONS, SCORES } from "@/utils/constants";
+import {
+  calculateInteractionScore,
+  HANDLE_REGEX,
+  MAX_SKEETS_ITERATIONS,
+} from "@/utils/constants";
 import { extractProfileInfo } from "@/utils/extract-profile-info";
 
 export const fetchHandle: (
@@ -43,11 +47,12 @@ export const fetchHandle: (
   period: string | null,
 ): Promise<VersionDefinition> => {
   // Check cache
-  const inCache = await Cache.getCache(`handle-${handle}-${period}`);
+  const cacheKey = `handle-${handle}-${period}`;
+  const cached = await Cache.getCache(cacheKey);
 
-  if (inCache) {
+  if (cached) {
     // Return cached version
-    return JSON.parse(inCache) as VersionDefinition;
+    return JSON.parse(cached) as VersionDefinition;
   }
 
   // Resume session
@@ -62,16 +67,16 @@ export const fetchHandle: (
   // Skycle follow the user
   await agent.follow(profileFetched.data.did);
 
-  // Extract own profile information
-  const own: ProfileDefinition = extractProfileInfo(profileFetched.data);
-
   let usersData: ProfileDefinition[] = [];
-
-  // Fetch user skeets
-  const skeets: AppBskyFeedDefs.FeedViewPost[] = await fetchTweets(own.did);
 
   // Get time range
   const range = await getPeriod(period);
+
+  // Extract own profile information
+  const own: ProfileDefinition = extractProfileInfo(profileFetched.data);
+
+  // Fetch user skeets
+  const skeets: AppBskyFeedDefs.FeedViewPost[] = await fetchTweets(own.did);
 
   // Filter skeets by time range
   const filteredSkeets: AppBskyFeedDefs.FeedViewPost[] = skeets.filter(
@@ -121,10 +126,12 @@ export const fetchHandle: (
     },
   );
 
-  // Count mentioned user DIDs
-  const mentionedUserDids: {
+  type UserMentionedUserDidsType = {
     [key: string]: number;
-  } = countBy(
+  };
+
+  // Count mentioned user DIDs
+  const mentionedUserDids: UserMentionedUserDidsType = countBy(
     mentions.map((skeet: AppBskyFeedDefs.FeedViewPost): string[] =>
       (skeet.post.record as { facets: Facet[] }).facets.map(
         (facet: Facet): string =>
@@ -143,10 +150,12 @@ export const fetchHandle: (
       skeet?.post?.author?.did !== own.did,
   );
 
-  // Count shares
-  const sharesUserDids: {
+  type UserSharesUserDidsType = {
     [key: string]: number;
-  } = countBy(
+  };
+
+  // Count shares
+  const sharesUserDids: UserSharesUserDidsType = countBy(
     shares.map(
       (reskeet: AppBskyFeedDefs.FeedViewPost): string =>
         reskeet.post.author.did,
@@ -168,10 +177,12 @@ export const fetchHandle: (
       skeet?.post?.embed?.record?.author.did !== own.did,
   );
 
-  // Count quotes
-  const quotesUserDids: {
+  type UserQuotesUserDidsType = {
     [key: string]: number;
-  } = countBy(
+  };
+
+  // Count quotes
+  const quotesUserDids: UserQuotesUserDidsType = countBy(
     quotes.map((skeet: AppBskyFeedDefs.FeedViewPost): string =>
       AppBskyEmbedRecord.isView(skeet?.post?.embed) &&
       AppBskyEmbedRecord.isViewRecord(skeet?.post?.embed?.record)
@@ -198,10 +209,12 @@ export const fetchHandle: (
       skeet?.reply?.root?.author.did !== own.did,
   );
 
-  // Count replies
-  const repliesUserDids: {
+  type UserRepliesUserDidsType = {
     [key: string]: number;
-  } = countBy(
+  };
+
+  // Count replies
+  const repliesUserDids: UserRepliesUserDidsType = countBy(
     replies.map(
       (skeet: AppBskyFeedDefs.FeedViewPost): string =>
         (
@@ -236,7 +249,7 @@ export const fetchHandle: (
   // Remove duplicates
   const uniqueUsers: ProfileDefinition[] = uniqBy(usersData, "did");
 
-  // Map friends with scores
+  // Map friends with scores using the sophisticated scoring algorithm
   const friendsWithScores: ProfileDefinition[] = uniqueUsers.map(
     (user: ProfileDefinition): ProfileDefinition => {
       const { did } = user;
@@ -246,12 +259,13 @@ export const fetchHandle: (
       const shares: number = sharesUserDids[did] || 0;
       const replies: number = repliesUserDids[did] || 0;
 
-      const score: number =
-        SCORES.base + // point de base
-        SCORES.perReplies * replies + // réponses = engagement direct + effort
-        SCORES.perMentions * mentions + // mentions = reconnaissance directe
-        SCORES.perQuotes * quotes + // citations = valorisation + redistribution
-        SCORES.perShares * shares; // partages = diffusion (mais parfois passif)
+      // Calcul du score avec l'algorithme optimisé
+      const score: number = calculateInteractionScore({
+        replies,
+        mentions,
+        quotes,
+        shares,
+      });
 
       return {
         ...user,
@@ -272,32 +286,32 @@ export const fetchHandle: (
     "score",
     ["desc"],
   );
+
+  // Remove own profile from friends list
   remove(
     friends,
     (friend: ProfileDefinition): boolean => friend.did === own.did,
   );
+
+  // Remove invalid profiles
   remove(
     friends,
     (friend: ProfileDefinition): boolean => friend.handle === "handle.invalid",
   );
 
-  const circles: VersionDefinition = {
+  const version: VersionDefinition = {
     own,
     friends,
   };
 
   // Save version and cache
-  await saveVersion(own.did, own.handle, circles);
-  await Cache.setCache(
-    `handle-${handle}-${period}`,
-    JSON.stringify(circles),
-    60 * 60 * 24,
-  );
+  await saveVersion(own.did, own.handle, version);
+  await Cache.setCache(cacheKey, JSON.stringify(version), 60 * 60 * 24);
 
-  return circles;
+  return version;
 };
 
-export const getPeriod = async (
+const getPeriod = async (
   period: string | null,
 ): Promise<{
   start: Date;
